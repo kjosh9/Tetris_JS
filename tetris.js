@@ -14,21 +14,10 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         noFill();
     };
     
-    boxOBJ.prototype.CollCheckBottom = function(stackOBJ){
-        if(this.y == 680){
-            return true;
-        }
-        for(var i = 0; i < stackOBJ.block.length; i++){
-            if((this.x == stackOBJ.block[i].x) && (this.y+10 == stackOBJ.block[i].y)){
-                return true;
-            }
-        }
-    };
-    
-    var box0 = new boxOBJ(140,680);
-    var box1 = new boxOBJ(120,680);
-    var box2 = new boxOBJ(140,660);
-    var box3 = new boxOBJ(120,660);
+    var box0 = new boxOBJ(280,680);
+    var box1 = new boxOBJ(300,680);
+    var box2 = new boxOBJ(280,660);
+    var box3 = new boxOBJ(300,660);
     
     var stack = function(){
         this.block = [];
@@ -45,22 +34,86 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
     };
         
     var shapeOBJ = function(Type){
+        this.count = 0;
+        
+        switch(Type){
+            case 1:
+                this.box0 = new boxOBJ(280,0);
+                this.box1 = new boxOBJ(300,0);
+                this.box2 = new boxOBJ(280,20);
+                this.box3 = new boxOBJ(300,20);
+                break;
                 
-
+            case 2:
+                this.box0 = new boxOBJ(280,0);
+                this.box1 = new boxOBJ(300,0);
+                this.box2 = new boxOBJ(280,20);
+                this.box3 = new boxOBJ(300,20);
+                break;
+        }
         
     };
     
-    shapeOBJ.prototype.move = function(){
-        this.count++;
-        if(this.count >= 60){
-            this.count = 0;
-            this.y+=20;
+    
+    shapeOBJ.prototype.CollCheckBottom = function(stackOBJ){
+        if(this.box0.y >= 680){
+            return true;
         }
-        if(this.y>=580){
-            this.count = 0;
+        for(var i = 0; i < stackOBJ.block.length; i++){
+            if((this.box0.x == stackOBJ.block[i].x) && (this.box0.y+20 == stackOBJ.block[i].y)){
+                return true;
+            }
         }
+        
+        if(this.box1.y >= 680){
+            return true;
+        }
+        for(var i = 0; i < stackOBJ.block.length; i++){
+            if((this.box1.x == stackOBJ.block[i].x) && (this.box1.y+20 == stackOBJ.block[i].y)){
+                return true;
+            }
+        }
+            
+        if(this.box2.y >= 680){
+            return true;
+        }
+        for(var i = 0; i < stackOBJ.block.length; i++){
+            if((this.box2.x == stackOBJ.block[i].x) && (this.box2.y+20 == stackOBJ.block[i].y)){
+                return true;
+            }
+        }
+
+        if(this.box3.y >= 680){
+            return true;
+        }
+        for(var i = 0; i < stackOBJ.block.length; i++){
+            if((this.box3.x == stackOBJ.block[i].x) && (this.box3.y+20 == stackOBJ.block[i].y)){
+                return true;
+            }
+        }
+        return false;
     };
     
+    shapeOBJ.prototype.move = function(stackOBJ){
+        this.count++;
+        if((this.count >= 60)&&(this.CollCheckBottom(stackOBJ)==false)){
+            this.count = 0;
+            this.box0.y+=20;
+            this.box1.y+=20;
+            this.box2.y+=20;
+            this.box3.y+=20;
+        }
+    };
+           
+    shapeOBJ.prototype.draw = function(){
+        this.box0.draw();
+        this.box1.draw();
+        this.box2.draw();
+        this.box3.draw();
+    };
+
+    var shape1 = new shapeOBJ(1);
+
     var pile = new stack();
     
     var draw = function () {
@@ -73,7 +126,8 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             }
         }
         
-        
+        shape1.draw();   
+        shape1.move(pile);
                 
         pile.draw();
         
