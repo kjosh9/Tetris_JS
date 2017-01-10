@@ -45,10 +45,38 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                 break;
                 
             case 2:
-                this.box0 = new boxOBJ(280,0);
+                this.box0 = new boxOBJ(320,0);
                 this.box1 = new boxOBJ(300,0);
                 this.box2 = new boxOBJ(280,20);
                 this.box3 = new boxOBJ(300,20);
+                break;
+                
+            case 3:
+                this.box0 = new boxOBJ(280,0);
+                this.box1 = new boxOBJ(260,0);
+                this.box2 = new boxOBJ(280,20);
+                this.box3 = new boxOBJ(300,20);
+                break;
+                
+            case 4:
+                this.box0 = new boxOBJ(280,0);
+                this.box1 = new boxOBJ(300,0);
+                this.box2 = new boxOBJ(280,20);
+                this.box3 = new boxOBJ(320,0);
+                break;
+                
+            case 5:
+                this.box0 = new boxOBJ(280,0);
+                this.box1 = new boxOBJ(300,0);
+                this.box2 = new boxOBJ(300,20);
+                this.box3 = new boxOBJ(260,0);
+                break;
+                
+            case 6:
+                this.box0 = new boxOBJ(280,0);
+                this.box1 = new boxOBJ(280,20);
+                this.box2 = new boxOBJ(280,40);
+                this.box3 = new boxOBJ(280,60);
                 break;
         }
         
@@ -112,7 +140,8 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         this.box3.draw();
     };
 
-    var shape1 = new shapeOBJ(1);
+    var shape1 = new shapeOBJ(3);
+    
 
     var pile = new stack();
     
