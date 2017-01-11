@@ -2,7 +2,6 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
     size(600, 700);
     frameRate(60);
 
-    //
     var keyArray = [];
     
     var keyPressed = function(){
@@ -11,14 +10,13 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
     
     var keyReleased = function(){
         keyArray[keyCode] = 0;
-    }
+    };
     
     var boxOBJ = function(x,y,color){
-        
         this.x = x;
         this.y = y;
         this.color = color;
-    }
+    };
     
     boxOBJ.prototype.draw = function(){
         
@@ -40,20 +38,46 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         noFill();
     };
     
-    var box0 = new boxOBJ(280,680);
-    var box1 = new boxOBJ(300,680);
-    var box2 = new boxOBJ(280,660);
-    var box3 = new boxOBJ(300,660);
-    
     var stack = function(){
         
         this.block = [];
+        for(var i = 0; i < 35; i++){
+            this.block.push([null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]);
+        }
+    
     };
     
     stack.prototype.draw = function(){
+        for(var i = 0; i < this.block.length; i++){
+            for(var j = 0; j < this.block[i].length; j++){
+                if(this.block[i][j] !== null){
+                    this.block[i][j].draw();
+                }
+            }
+        }
+    };
+    
+    stack.prototype.checkRows = function(){
+        
+        var deleteRow = false; 
         
         for(var i = 0; i < this.block.length; i++){
-            this.block[i].draw();
+            
+            deleteRow = true;
+            
+            for(var j = 0; j < this.block[i].length; j++){
+                if(this.block[i][j] === null){
+                    deleteRow = false;
+                }
+            }
+            
+            if(deleteRow === true){
+                this.block[i] = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null];
+                
+                /*for(var z = 34; z <= i; i--){
+                    
+                }*/
+            }
         }
     };
     
@@ -117,6 +141,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
     };
     
     shapeOBJ.prototype.rotate = function(){
+        
         switch(this.Type){
             case 1:
                 break;
@@ -390,14 +415,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         }
     };
     
-    shapeOBJ.prototype.CollCheckBottom = function(stackOBJ){
+    shapeOBJ.prototype.CollCheckBottom = function(stackOBJ){      
+        
         if(this.box0.y >= 680){
             return true;
             
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
-            if((this.box0.x == stackOBJ.block[i].x) && (this.box0.y+20 == stackOBJ.block[i].y)){
-                return true;
+            for(var j = 0; j < stackOBJ.block[i].length; j++){
+                if(pile.block[i][j] !== null){
+                    if((this.box0.x == stackOBJ.block[i][j].x) && (this.box0.y+20 == stackOBJ.block[i][j].y)){
+                        return true;
+                    }
+                }
             }
         }
         
@@ -405,8 +435,12 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
-            if((this.box1.x == stackOBJ.block[i].x) && (this.box1.y+20 == stackOBJ.block[i].y)){
-                return true;
+            for(var j = 0; j < stackOBJ.block[i].length; j++){
+                if(pile.block[i][j] !== null){
+                    if((this.box1.x == stackOBJ.block[i][j].x) && (this.box1.y+20 == stackOBJ.block[i][j].y)){
+                        return true;
+                    }
+                }
             }
         }
             
@@ -414,8 +448,12 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
-            if((this.box2.x == stackOBJ.block[i].x) && (this.box2.y+20 == stackOBJ.block[i].y)){
-                return true;
+            for(var j = 0; j < stackOBJ.block[i].length; j++){
+                if(pile.block[i][j] !== null){    
+                    if((this.box2.x == stackOBJ.block[i][j].x) && (this.box2.y+20 == stackOBJ.block[i][j].y)){
+                        return true;
+                    }
+                }
             }
         }
 
@@ -423,20 +461,29 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
-            if((this.box3.x == stackOBJ.block[i].x) && (this.box3.y+20 == stackOBJ.block[i].y)){
-                return true;
+            for(var j = 0; j < stackOBJ.block[i].length; j++){
+                if(pile.block[i][j] !== null){
+                    if((this.box3.x == stackOBJ.block[i][j].x) && (this.box3.y+20 == stackOBJ.block[i][j].y)){
+                        return true;
+                    }
+                }
             }
         }
         return false;
     };
     
     shapeOBJ.prototype.CollCheckRight = function(stackOBJ){
+        
         if(this.box0.x >= 580){
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
-            if((this.box0.y == stackOBJ.block[i].y) && (this.box0.x+20 == stackOBJ.block[i].x)){
-                return true;
+            for(var j = 0; j < stackOBJ.block[i].length; j++){
+                if(pile.block[i][j] !== null){
+                    if((this.box0.y == stackOBJ.block[i][j].y) && (this.box0.x+20 == stackOBJ.block[i][j].x)){
+                        return true;
+                    }
+                }
             }
         }
         
@@ -444,8 +491,12 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
-            if((this.box1.y == stackOBJ.block[i].y) && (this.box1.x+20 == stackOBJ.block[i].x)){
-                return true;
+            for(var j = 0; j < stackOBJ.block[i].length; j++){
+                if(pile.block[i][j] !== null){
+                    if((this.box1.y == stackOBJ.block[i][j].y) && (this.box1.x+20 == stackOBJ.block[i][j].x)){
+                        return true;
+                    }
+                }
             }
         }
             
@@ -453,8 +504,12 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
-            if((this.box2.y == stackOBJ.block[i].y) && (this.box2.y+20 == stackOBJ.block[i].y)){
-                return true;
+            for(var j = 0; j < stackOBJ.block[i].length; j++){
+                if(pile.block[i][j] !== null){
+                    if((this.box2.y == stackOBJ.block[i][j].y) && (this.box2.x+20 == stackOBJ.block[i][j].x)){
+                        return true;
+                    }
+                }
             }
         }
 
@@ -462,20 +517,29 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
-            if((this.box3.y == stackOBJ.block[i].y) && (this.box3.x+20 == stackOBJ.block[i].x)){
-                return true;
+            for(var j = 0; j < stackOBJ.block[i].length; j++){
+                if(pile.block[i][j] !== null){
+                    if((this.box3.y == stackOBJ.block[i][j].y) && (this.box3.x+20 == stackOBJ.block[i][j].x)){
+                        return true;
+                    }
+                }
             }
         }
         return false;
     };
     
     shapeOBJ.prototype.CollCheckLeft = function(stackOBJ){
+        
         if(this.box0.x <= 0){
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
-            if((this.box0.y == stackOBJ.block[i].y) && (this.box0.x-20 == stackOBJ.block[i].x)){
-                return true;
+            for(var j = 0; j < stackOBJ.block[i].length; j++){
+                if(pile.block[i][j] !== null){
+                    if((this.box0.y == stackOBJ.block[i][j].y) && (this.box0.x-20 == stackOBJ.block[i][j].x)){
+                        return true;
+                    }
+                }
             }
         }
         
@@ -483,8 +547,12 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
-            if((this.box1.y == stackOBJ.block[i].y) && (this.box1.x-20 == stackOBJ.block[i].x)){
-                return true;
+            for(var j = 0; j < stackOBJ.block[i].length; j++){
+                if(pile.block[i][j] !== null){
+                    if((this.box1.y == stackOBJ.block[i][j].y) && (this.box1.x-20 == stackOBJ.block[i][j].x)){
+                        return true;
+                    }
+                }
             }
         }
             
@@ -492,8 +560,12 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
-            if((this.box2.y == stackOBJ.block[i].y) && (this.box2.x-20 == stackOBJ.block[i].x)){
-                return true;
+            for(var j = 0; j < stackOBJ.block[i].length; j++){
+                if(pile.block[i][j] !== null){
+                    if((this.box1.y == stackOBJ.block[i][j].y) && (this.box1.x-20 == stackOBJ.block[i][j].x)){
+                        return true;
+                    }
+                }
             }
         }
 
@@ -501,14 +573,18 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
-            if((this.box3.y == stackOBJ.block[i].y) && (this.box3.x-20 == stackOBJ.block[i].x)){
-                return true;
+            for(var j = 0; j < stackOBJ.block[i].length; j++){
+                if(pile.block[i][j] !== null){
+                    if((this.box1.y == stackOBJ.block[i][j].y) && (this.box1.x-20 == stackOBJ.block[i][j].x)){
+                        return true;
+                    }
+                }
             }
         }
         return false;
     };
     
-    shapeOBJ.prototype.move = function(stackOBJ){ 
+    shapeOBJ.prototype.move = function(stackOBJ){
         
         this.count++;
         
@@ -551,13 +627,13 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         
         if(this.CollCheckBottom(stackOBJ)==true){
             var newbox0 = this.box0;
-            stackOBJ.block.push(newbox0);
+            stackOBJ.block[newbox0.y/20][newbox0.x/20] = newbox0;
             var newbox1 = this.box1;
-            stackOBJ.block.push(newbox1);
+            stackOBJ.block[newbox1.y/20][newbox1.x/20] = newbox1;
             var newbox2 = this.box2;
-            stackOBJ.block.push(newbox2);
+            stackOBJ.block[newbox2.y/20][newbox2.x/20] = newbox2;
             var newbox3 = this.box3;
-            stackOBJ.block.push(newbox3);
+            stackOBJ.block[newbox3.y/20][newbox3.x/20] = newbox3;
             
             delete this.block0;
             delete this.block1;
@@ -619,9 +695,16 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
 
                 pile.draw();
                 
+                pile.checkRows();
+                
                 for(var i = 0; i < pile.block.length; i++){
-                    if(pile.block[i].y <= 40){
-                        state = "game over";
+                    for(var j = 0; j < pile.block[i].length; j++){
+                        if(pile.block[i][j] !== null){
+                            if(pile.block[i][j].y <= 40){
+                                state = "game over";
+                                break;
+                            }
+                        }
                     }
                 }
 
