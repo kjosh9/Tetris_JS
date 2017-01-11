@@ -2,6 +2,24 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
     size(600, 700);
     frameRate(60);
 
+    //
+    var keyArray = [];
+    
+    /*var BTNControl = function(){
+        this.count = 0;
+    };
+    
+    BTNControl.prototype.Update() = function(){
+        
+    };*/
+    
+    var keyPressed = function(){
+        keyArray[keyCode] = 1;
+    };
+    
+    var keyReleased = function(){
+        keyArray[keyCode] = 0;
+    }
     
     var boxOBJ = function(x,y,color){
         this.x = x;
@@ -45,12 +63,12 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         
     var shapeOBJ = function(Type){
         this.count = 0;
+        this.HCount = 0;
         this.Type = Type;
         this.reshape();
     };
     
     shapeOBJ.prototype.reshape = function(){
-        
         switch(this.Type){
             case 1:
                 this.box0 = new boxOBJ(280,0,1);
@@ -97,6 +115,10 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         this.Type = (this.Type+1)%6;
     };
     
+    shapeOBJ.prototype.rotate = function(){
+        
+    };
+    
     shapeOBJ.prototype.CollCheckBottom = function(stackOBJ){
         if(this.box0.y >= 680){
             return true;
@@ -137,8 +159,115 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         return false;
     };
     
-    shapeOBJ.prototype.move = function(stackOBJ){
+    shapeOBJ.prototype.CollCheckRight = function(stackOBJ){
+        if(this.box0.x >= 580){
+            return true;
+        }
+        for(var i = 0; i < stackOBJ.block.length; i++){
+            if((this.box0.y == stackOBJ.block[i].y) && (this.box0.x+20 == stackOBJ.block[i].x)){
+                return true;
+            }
+        }
+        
+        if(this.box1.x >= 580){
+            return true;
+        }
+        for(var i = 0; i < stackOBJ.block.length; i++){
+            if((this.box1.y == stackOBJ.block[i].y) && (this.box1.x+20 == stackOBJ.block[i].x)){
+                return true;
+            }
+        }
+            
+        if(this.box2.x >= 580){
+            return true;
+        }
+        for(var i = 0; i < stackOBJ.block.length; i++){
+            if((this.box2.y == stackOBJ.block[i].y) && (this.box2.y+20 == stackOBJ.block[i].y)){
+                return true;
+            }
+        }
+
+        if(this.box3.x >= 580){
+            return true;
+        }
+        for(var i = 0; i < stackOBJ.block.length; i++){
+            if((this.box3.y == stackOBJ.block[i].y) && (this.box3.x+20 == stackOBJ.block[i].x)){
+                return true;
+            }
+        }
+        return false;
+    };
+    
+    shapeOBJ.prototype.CollCheckLeft = function(stackOBJ){
+        if(this.box0.x <= 0){
+            return true;
+        }
+        for(var i = 0; i < stackOBJ.block.length; i++){
+            if((this.box0.y == stackOBJ.block[i].y) && (this.box0.x-20 == stackOBJ.block[i].x)){
+                return true;
+            }
+        }
+        
+        if(this.box1.x <= 0){
+            return true;
+        }
+        for(var i = 0; i < stackOBJ.block.length; i++){
+            if((this.box1.y == stackOBJ.block[i].y) && (this.box1.x-20 == stackOBJ.block[i].x)){
+                return true;
+            }
+        }
+            
+        if(this.box2.x <= 0){
+            return true;
+        }
+        for(var i = 0; i < stackOBJ.block.length; i++){
+            if((this.box2.y == stackOBJ.block[i].y) && (this.box2.x-20 == stackOBJ.block[i].x)){
+                return true;
+            }
+        }
+
+        if(this.box3.x <= 0){
+            return true;
+        }
+        for(var i = 0; i < stackOBJ.block.length; i++){
+            if((this.box3.y == stackOBJ.block[i].y) && (this.box3.x-20 == stackOBJ.block[i].x)){
+                return true;
+            }
+        }
+        return false;
+    };
+    
+    shapeOBJ.prototype.move = function(stackOBJ){    
         this.count++;
+        
+        if(keyArray[RIGHT] === 1 && keyArray[LEFT] !== 1){
+            this.HCount++;
+            if((this.HCount == 5 )&&(this.CollCheckRight(stackOBJ) == false)){
+                this.box0.x+=20;
+                this.box1.x+=20;
+                this.box2.x+=20;
+                this.box3.x+=20;
+                this.HCount = 0;
+            }
+        }
+        if(keyArray[LEFT] === 1 && keyArray[RIGHT] !== 1){
+            this.HCount++;
+            if((this.HCount == 5) &&(this.CollCheckLeft(stackOBJ) == false)){
+                this.box0.x-=20;
+                this.box1.x-=20;
+                this.box2.x-=20;
+                this.box3.x-=20;
+                this.HCount = 0;
+            }
+        }
+        
+        if(keyArray[DOWN] === 1){
+            this.count+=2;
+        }
+        
+        if(keyArray[LEFT] === 0 && keyArray[RIGHT] === 0){
+            this.HCount = 0;
+        }
         
         if(this.CollCheckBottom(stackOBJ)==true){
             var newbox0 = this.box0;
@@ -167,6 +296,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
     };
            
     shapeOBJ.prototype.draw = function(){
+        
         this.box0.draw();
         this.box1.draw();
         this.box2.draw();
@@ -177,20 +307,48 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
 
     var pile = new stack();
     
+    var state = "play";
+    
     var draw = function () {
         
-        background(300,300,300);
-        
-        for(var i = 0; i < 600; i+=20){
-            for(var j = 0; j < 700; j+=20){
-                rect(i,j,20,20);
-            }
-        }
-        
-        shape1.draw();   
-        shape1.move(pile);
+        switch(state){   
                 
-        pile.draw();
-        
+            case "start":
+                fill(100,100,100);
+                rect(300,300,50,50);
+                noFill();
+                
+                if(keyArray[UP] === 1){
+                    state = "play";
+                }
+                break;
+
+            case "play":
+                background(300,300,300);
+
+                for(var i = 0; i < 600; i+=20){
+                    for(var j = 0; j < 700; j+=20){
+                        rect(i,j,20,20);
+                    }
+                }
+
+                shape1.draw();   
+                shape1.move(pile);
+
+                pile.draw();
+                
+                for(var i = 0; i < pile.block.length; i++){
+                    if(pile.block[i].y <= 40){
+                        state = "game over";
+                    }
+                }
+
+                break;
+                
+            case "game over":
+                
+                
+                break;
+        }
     };
 }};
