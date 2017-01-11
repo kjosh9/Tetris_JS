@@ -41,13 +41,27 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
     var stack = function(){
         
         this.block = [];
-        for(var i = 0; i < 35; i++){
-            this.block.push([null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]);
+        for(var i = 0; i < 34; i++){
+            this.block.push([null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]);
         }
     
+        for(var i = 34; i < 35; i++){
+            var newrow = [];
+            for(var j = 0; j < 15; j++){
+                if(j != 14){
+                    newrow.push(new boxOBJ(j*20,i*20,3));    
+                }
+                else{
+                    newrow.push(null);
+                }
+            }
+            this.block.push(newrow);
+        }
+        this.block.push([null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]);
     };
     
     stack.prototype.draw = function(){
+        
         for(var i = 0; i < this.block.length; i++){
             for(var j = 0; j < this.block[i].length; j++){
                 if(this.block[i][j] !== null){
@@ -71,14 +85,17 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                 }
             }
             
-            if(deleteRow === true){
-                this.block[i] = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null];
-                
-                /*for(var z = 34; z <= i; i--){
-                    
-                }*/
+            if(deleteRow === true){      
+                for(var z = i; z > 0; z--){
+                    this.block[z] = this.block[z-1]
+                    for(var p = 0; p < this.block[z].length; p++){
+                        if(this.block[z][p] !== null){
+                            this.block[z][p].y+=20;
+                        }
+                    }
+                }   
             }
-        }
+        }    
     };
     
     var shapeOBJ = function(Type){
@@ -95,45 +112,45 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         
         switch(this.Type){
             case 1:
-                this.box0 = new boxOBJ(280,0,1);
-                this.box1 = new boxOBJ(300,0,1);
-                this.box2 = new boxOBJ(280,20,1);
-                this.box3 = new boxOBJ(300,20,1);
+                this.box0 = new boxOBJ(280-160,0,1);
+                this.box1 = new boxOBJ(300-160,0,1);
+                this.box2 = new boxOBJ(280-160,20,1);
+                this.box3 = new boxOBJ(300-160,20,1);
                 break;
                 
             case 2:
-                this.box0 = new boxOBJ(320,0,2);
-                this.box1 = new boxOBJ(300,0,2);
-                this.box2 = new boxOBJ(280,20,2);
-                this.box3 = new boxOBJ(300,20,2);
+                this.box0 = new boxOBJ(320-160,0,2);
+                this.box1 = new boxOBJ(300-160,0,2);
+                this.box2 = new boxOBJ(280-160,20,2);
+                this.box3 = new boxOBJ(300-160,20,2);
                 break;
                 
             case 3:
-                this.box0 = new boxOBJ(280,0,3);
-                this.box1 = new boxOBJ(260,0,3);
-                this.box2 = new boxOBJ(280,20,3);
-                this.box3 = new boxOBJ(300,20,3);
+                this.box0 = new boxOBJ(280-160,0,3);
+                this.box1 = new boxOBJ(260-160,0,3);
+                this.box2 = new boxOBJ(280-160,20,3);
+                this.box3 = new boxOBJ(300-160,20,3);
                 break;
                 
             case 4:
-                this.box0 = new boxOBJ(280,0,4);
-                this.box1 = new boxOBJ(300,0,4);
-                this.box2 = new boxOBJ(280,20,4);
-                this.box3 = new boxOBJ(320,0,4);
+                this.box0 = new boxOBJ(280-160,0,4);
+                this.box1 = new boxOBJ(300-160,0,4);
+                this.box2 = new boxOBJ(280-160,20,4);
+                this.box3 = new boxOBJ(320-160,0,4);
                 break;
                 
             case 5:
-                this.box0 = new boxOBJ(280,0,5);
-                this.box1 = new boxOBJ(300,0,5);
-                this.box2 = new boxOBJ(300,20,5);
-                this.box3 = new boxOBJ(260,0,5);
+                this.box0 = new boxOBJ(280-160,0,5);
+                this.box1 = new boxOBJ(300-160,0,5);
+                this.box2 = new boxOBJ(300-160,20,5);
+                this.box3 = new boxOBJ(260-160,0,5);
                 break;
                 
             case 6:
-                this.box0 = new boxOBJ(280,0,6);
-                this.box1 = new boxOBJ(280,20,6);
-                this.box2 = new boxOBJ(280,40,6);
-                this.box3 = new boxOBJ(280,60,6);
+                this.box0 = new boxOBJ(280-160,0,6);
+                this.box1 = new boxOBJ(280-160,20,6);
+                this.box2 = new boxOBJ(280-160,40,6);
+                this.box3 = new boxOBJ(280-160,60,6);
                 break;
         }
         
@@ -474,7 +491,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
     
     shapeOBJ.prototype.CollCheckRight = function(stackOBJ){
         
-        if(this.box0.x >= 580){
+        if(this.box0.x >= 280){
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
@@ -487,7 +504,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             }
         }
         
-        if(this.box1.x >= 580){
+        if(this.box1.x >= 280){
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
@@ -500,7 +517,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             }
         }
             
-        if(this.box2.x >= 580){
+        if(this.box2.x >= 280){
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
@@ -513,7 +530,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             }
         }
 
-        if(this.box3.x >= 580){
+        if(this.box3.x >= 280){
             return true;
         }
         for(var i = 0; i < stackOBJ.block.length; i++){
@@ -682,9 +699,10 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                 break;
 
             case "play":
+                                
                 background(300,300,300);
 
-                for(var i = 0; i < 600; i+=20){
+                for(var i = 0; i < 300; i+=20){
                     for(var j = 0; j < 700; j+=20){
                         rect(i,j,20,20);
                     }
@@ -692,10 +710,8 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
 
                 shape1.draw();   
                 shape1.move(pile);
-
-                pile.draw();
-                
                 pile.checkRows();
+                pile.draw();
                 
                 for(var i = 0; i < pile.block.length; i++){
                     for(var j = 0; j < pile.block[i].length; j++){
