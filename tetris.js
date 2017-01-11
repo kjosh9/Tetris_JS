@@ -5,14 +5,6 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
     //
     var keyArray = [];
     
-    /*var BTNControl = function(){
-        this.count = 0;
-    };
-    
-    BTNControl.prototype.Update() = function(){
-        
-    };*/
-    
     var keyPressed = function(){
         keyArray[keyCode] = 1;
     };
@@ -22,12 +14,14 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
     }
     
     var boxOBJ = function(x,y,color){
+        
         this.x = x;
         this.y = y;
         this.color = color;
     }
     
     boxOBJ.prototype.draw = function(){
+        
         switch(this.color){
             case 1: fill(0,0,200);
                 break;
@@ -52,23 +46,29 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
     var box3 = new boxOBJ(300,660);
     
     var stack = function(){
+        
         this.block = [];
     };
     
     stack.prototype.draw = function(){
+        
         for(var i = 0; i < this.block.length; i++){
             this.block[i].draw();
         }
     };
-        
+    
     var shapeOBJ = function(Type){
+        
         this.count = 0;
         this.HCount = 0;
+        this.UCount = 5;
         this.Type = Type;
         this.reshape();
+        this.orientation = 0;
     };
     
     shapeOBJ.prototype.reshape = function(){
+        
         switch(this.Type){
             case 1:
                 this.box0 = new boxOBJ(280,0,1);
@@ -112,11 +112,282 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                 this.box3 = new boxOBJ(280,60,6);
                 break;
         }
-        this.Type = (this.Type+1)%6;
+        
+        this.orientation = 0;
     };
     
     shapeOBJ.prototype.rotate = function(){
-        
+        switch(this.Type){
+            case 1:
+                break;
+                
+            case 2:
+                if(this.orientation == 0){
+                    
+                    this.box0.y += 20;
+                    this.box0.x -= 20;
+
+                    this.box2.y -= 40;
+                    
+                    this.box3.y -= 20;
+                    this.box3.x -= 20;
+                    
+                    this.orientation = 1;
+                }
+                else if(this.orientation == 1){
+                    this.box0.y -= 20;
+                    this.box0.x -= 20;
+
+                    this.box2.x += 40;
+                    
+                    this.box3.y -= 20;
+                    this.box3.x += 20;
+                    
+                    this.orientation = 2;
+                }
+                else if(this.orientation == 2){
+                    this.box0.y -= 20;
+                    this.box0.x += 20;
+                    
+                    this.box2.y += 40;
+                    
+                    this.box3.y += 20;
+                    this.box3.x += 20;
+                    
+                    this.orientation = 3;
+                }
+                else if(this.orientation == 3){
+                    this.box0.y += 20;
+                    this.box0.x += 20;
+                    
+                    this.box2.x -= 40;
+                    
+                    this.box3.y += 20;
+                    this.box3.x -= 20;
+                    
+                    this.orientation = 0;
+                }
+                break;
+                
+            case 3:
+                
+                if(this.orientation == 0){
+                    
+                    this.box1.y -= 20;
+                    this.box1.x += 20;
+                    
+                    this.box3.x -= 40;
+                    
+                    this.box2.y -= 20;
+                    this.box2.x -= 20;
+                    
+                    this.orientation = 1;
+                }
+                else if(this.orientation == 1){
+                    this.box1.y += 20;
+                    this.box1.x += 20;
+
+                    this.box3.y -= 40;
+                    
+                    this.box2.y -= 20;
+                    this.box2.x += 20;
+                    
+                    this.orientation = 2;
+                }
+                else if(this.orientation == 2){
+                    this.box1.y += 20;
+                    this.box1.x -= 20;
+                    
+                    this.box3.x += 40;
+                    
+                    this.box2.y += 20;
+                    this.box2.x += 20;
+                    
+                    this.orientation = 3;
+                }
+                else if(this.orientation == 3){
+                    this.box1.y -= 20;
+                    this.box1.x -= 20;
+                    
+                    this.box3.y += 40;
+                    
+                    this.box2.y += 20;
+                    this.box2.x -= 20;
+                    
+                    this.orientation = 0;
+                }
+                
+                break;
+                
+            case 4:
+                
+                if(this.orientation == 0){
+                    
+                    this.box3.y += 20;
+                    this.box3.x -= 20;
+                    
+                    this.box2.y -= 40;
+                    
+                    this.box0.y -= 20;
+                    this.box0.x += 20;
+                    
+                    this.orientation = 1;
+                }
+                else if(this.orientation == 1){
+                    this.box3.y -= 20;
+                    this.box3.x -= 20;
+
+                    this.box2.x += 40;
+                    
+                    this.box0.y += 20;
+                    this.box0.x += 20;
+                    
+                    this.orientation = 2;
+                }
+                else if(this.orientation == 2){
+                    this.box3.y -= 20;
+                    this.box3.x += 20;
+                    
+                    this.box2.y += 40;
+                    
+                    this.box0.y += 20;
+                    this.box0.x -= 20;
+                    
+                    this.orientation = 3;
+                }
+                else if(this.orientation == 3){
+                    this.box3.y += 20;
+                    this.box3.x += 20;
+                    
+                    this.box2.x -= 40;
+                    
+                    this.box0.y -= 20;
+                    this.box0.x -= 20;
+                    
+                    this.orientation = 0;
+                }
+                
+                break;
+                
+            case 5:
+                
+                if(this.orientation == 0){
+                    
+                    this.box1.y += 20;
+                    this.box1.x -= 20;
+                    
+                    this.box2.x -= 40;
+                    
+                    this.box3.y -= 20;
+                    this.box3.x += 20;
+                    
+                    this.orientation = 1;
+                }
+                else if(this.orientation == 1){
+                    this.box1.y -= 20;
+                    this.box1.x -= 20;
+
+                    this.box2.y -= 40;
+                    
+                    this.box3.y += 20;
+                    this.box3.x += 20;
+                    
+                    this.orientation = 2;
+                }
+                else if(this.orientation == 2){
+                    this.box1.y -= 20;
+                    this.box1.x += 20;
+                    
+                    this.box2.x += 40;
+                    
+                    this.box3.y += 20;
+                    this.box3.x -= 20;
+                    
+                    this.orientation = 3;
+                }
+                else if(this.orientation == 3){
+                    this.box1.y += 20;
+                    this.box1.x += 20;
+                    
+                    this.box2.y += 40;
+                    
+                    this.box3.y -= 20;
+                    this.box3.x -= 20;
+                    
+                    this.orientation = 0;
+                }
+                
+                break;
+                
+            case 6:
+                
+                if(this.orientation == 0){
+                    
+                    this.box0.y += 20;
+                    this.box0.x += 40;
+                    
+                    this.box1.y += 0;
+                    this.box1.x += 20;
+                    
+                    this.box2.x -= 0;
+                    this.box2.y -= 20;
+                    
+                    this.box3.y -= 40;
+                    this.box3.x -= 20;
+                    
+                    this.orientation = 1;
+                }
+                else if(this.orientation == 1){
+                    
+                    this.box0.y -= 20;
+                    this.box0.x -= 40;
+                    
+                    this.box1.y += 0;
+                    this.box1.x -= 20;
+                    
+                    this.box2.x -= 0;
+                    this.box2.y += 20;
+                    
+                    this.box3.y += 40;
+                    this.box3.x += 20;
+                    
+                    this.orientation = 2;
+                }
+                else if(this.orientation == 2){
+                    this.box0.y += 20;
+                    this.box0.x += 40;
+                    
+                    this.box1.y += 0;
+                    this.box1.x += 20;
+                    
+                    this.box2.x -= 0;
+                    this.box2.y -= 20;
+                    
+                    this.box3.y -= 40;
+                    this.box3.x -= 20;
+                    
+                    this.orientation = 3;
+                }
+                else if(this.orientation == 3){
+                    this.box0.y -= 20;
+                    this.box0.x -= 40;
+                    
+                    this.box1.y += 0;
+                    this.box1.x -= 20;
+                    
+                    this.box2.x -= 0;
+                    this.box2.y += 20;
+                    
+                    this.box3.y += 40;
+                    this.box3.x += 20;
+                    
+                    this.orientation = 0;
+                }
+                
+                
+                break;
+                                
+        }
     };
     
     shapeOBJ.prototype.CollCheckBottom = function(stackOBJ){
@@ -237,7 +508,8 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         return false;
     };
     
-    shapeOBJ.prototype.move = function(stackOBJ){    
+    shapeOBJ.prototype.move = function(stackOBJ){ 
+        
         this.count++;
         
         if(keyArray[RIGHT] === 1 && keyArray[LEFT] !== 1){
@@ -259,6 +531,14 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                 this.box3.x-=20;
                 this.HCount = 0;
             }
+        }
+        
+        if(keyArray[UP] === 1 && this.UCount >= 5){
+            this.rotate(); 
+            this.UCount = 0;
+        }
+        else if(keyArray[UP] === 0){
+            this.UCount++;
         }
         
         if(keyArray[DOWN] === 1){
@@ -284,6 +564,8 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             delete this.block2;
             delete this.block3;
             
+            this.Type++;
+            this.Type = this.Type % 7;
             this.reshape();            
         }        
         else if((this.count >= 30)){
@@ -302,8 +584,8 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         this.box2.draw();
         this.box3.draw();
     };
-
-    var shape1 = new shapeOBJ(4);
+    
+    var shape1 = new shapeOBJ(6);
 
     var pile = new stack();
     
