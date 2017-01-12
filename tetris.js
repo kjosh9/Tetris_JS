@@ -2,6 +2,8 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
     size(600, 700);
     frameRate(60);
 
+    angleMode = "radians";
+    
     var keyArray = [];
     
     var keyPressed = function(){
@@ -38,26 +40,18 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         noFill();
     };
     
+    boxOBJ.prototype.reset = function(x,y,color){
+        this.color = color;
+        this.x = x;
+        this.y = y;
+    }
+    
     var stack = function(){
         
         this.block = [];
-        for(var i = 0; i < 34; i++){
+        for(var i = 0; i < 35; i++){
             this.block.push([null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]);
         }
-    
-        for(var i = 34; i < 35; i++){
-            var newrow = [];
-            for(var j = 0; j < 15; j++){
-                if(j != 14){
-                    newrow.push(new boxOBJ(j*20,i*20,3));    
-                }
-                else{
-                    newrow.push(null);
-                }
-            }
-            this.block.push(newrow);
-        }
-        this.block.push([null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]);
     };
     
     stack.prototype.draw = function(){
@@ -104,6 +98,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         this.HCount = 0;
         this.UCount = 5;
         this.Type = Type;
+        this.nextType;
         this.reshape();
         this.orientation = 0;
     };
@@ -153,7 +148,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                 this.box3 = new boxOBJ(280-160,60,6);
                 break;
         }
-        
+        this.nextType = (this.Type+1)%7;
         this.orientation = 0;
     };
     
@@ -428,7 +423,6 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                 
                 
                 break;
-                                
         }
     };
     
@@ -605,6 +599,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         
         this.count++;
         
+        //controlling for directional inputs 
         if(keyArray[RIGHT] === 1 && keyArray[LEFT] !== 1){
             this.HCount++;
             if((this.HCount == 5 )&&(this.CollCheckRight(stackOBJ) == false)){
@@ -642,6 +637,8 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             this.HCount = 0;
         }
         
+        //check if there is a collision with the bottom side of the block
+        //push the blocks into the pile object if it collides with the stack
         if(this.CollCheckBottom(stackOBJ)==true){
             var newbox0 = this.box0;
             stackOBJ.block[newbox0.y/20][newbox0.x/20] = newbox0;
@@ -656,11 +653,11 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             delete this.block1;
             delete this.block2;
             delete this.block3;
-            
-            this.Type++;
-            this.Type = this.Type % 7;
+        
+            this.Type = this.nextType;
             this.reshape();            
-        }        
+        } 
+        //move downwards if no collision
         else if((this.count >= 30)){
             this.count = 0;
             this.box0.y+=20;
@@ -669,19 +666,92 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
             this.box3.y+=20;
         }
     };
-           
+          
     shapeOBJ.prototype.draw = function(){
         
         this.box0.draw();
         this.box1.draw();
         this.box2.draw();
         this.box3.draw();
+            
     };
     
+    var displayBox = function(){
+        
+        this.Type = 0;
+        this.Vshift = 160;
+        this.Hshift = 150;
+        
+        this.box0 = new boxOBJ(280+this.Hshift,0+this.Vshift,1);
+        this.box1 = new boxOBJ(300+this.Hshift,0+this.Vshift,1);
+        this.box2 = new boxOBJ(280+this.Hshift,20+this.Vshift,1);
+        this.box3 = new boxOBJ(300+this.Hshift,20+this.Vshift,1);
+
+    };
+    
+    displayBox.prototype.draw = function(Type){
+        
+        rect(325, 10, 250, 250);
+        
+        switch(Type){
+            case 1:
+                this.box0.reset(280+this.Hshift,0+this.Vshift,1);
+                this.box1.reset(300+this.Hshift,0+this.Vshift,1);
+                this.box2.reset(280+this.Hshift,20+this.Vshift,1);
+                this.box3.reset(300+this.Hshift,20+this.Vshift,1);
+                break;
+                
+            case 2:
+                this.box0.reset(320+this.Hshift,0+this.Vshift,2);
+                this.box1.reset(300+this.Hshift,0+this.Vshift,2);
+                this.box2.reset(280+this.Hshift,20+this.Vshift,2);
+                this.box3.reset(300+this.Hshift,20+this.Vshift,2);
+                break;
+                
+            case 3:
+                this.box0.reset(280+this.Hshift,0+this.Vshift,3);
+                this.box1.reset(260+this.Hshift,0+this.Vshift,3);
+                this.box2.reset(280+this.Hshift,20+this.Vshift,3);
+                this.box3.reset(300+this.Hshift,20+this.Vshift,3);
+                break;
+                
+            case 4:
+                this.box0.reset(280+this.Hshift,0+this.Vshift,4);
+                this.box1.reset(300+this.Hshift,0+this.Vshift,4);
+                this.box2.reset(280+this.Hshift,20+this.Vshift,4);
+                this.box3.reset(320+this.Hshift,0+this.Vshift,4);
+                break;
+                
+            case 5:
+                this.box0.reset(280+this.Hshift,0+this.Vshift,5);
+                this.box1.reset(300+this.Hshift,0+this.Vshift,5);
+                this.box2.reset(300+this.Hshift,20+this.Vshift,5);
+                this.box3.reset(260+this.Hshift,0+this.Vshift,5);
+                break;
+                
+            case 6:
+                this.box0.reset(280+this.Hshift,0+this.Vshift,6);
+                this.box1.reset(280+this.Hshift,20+this.Vshift,6);
+                this.box2.reset(280+this.Hshift,40+this.Vshift,6);
+                this.box3.reset(280+this.Hshift,60+this.Vshift,6);
+                break;
+        }
+        
+        this.box0.draw();
+        this.box1.draw();
+        this.box2.draw();
+        this.box3.draw();    
+    } 
+    
+    //main shape that falls
     var shape1 = new shapeOBJ(6);
 
+    //the stack that is at the bottom
     var pile = new stack();
     
+    var NextBox = new displayBox();
+    
+    //game control state
     var state = "play";
     
     var draw = function () {
@@ -710,8 +780,11 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
 
                 shape1.draw();   
                 shape1.move(pile);
+                
                 pile.checkRows();
                 pile.draw();
+                
+                NextBox.draw(shape1.nextType);
                 
                 for(var i = 0; i < pile.block.length; i++){
                     for(var j = 0; j < pile.block[i].length; j++){
