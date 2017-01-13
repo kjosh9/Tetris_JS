@@ -1,6 +1,6 @@
 var sketchProc = function (processingInstance) { with (processingInstance) {
     size(600, 700);
-    frameRate(60);
+    frameRate(30);
 
     angleMode = "radians";
     
@@ -152,7 +152,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         this.orientation = 0;
     };
     
-    shapeOBJ.prototype.rotate = function(){
+    shapeOBJ.prototype.rotate = function(stackOBJ){
         
         switch(this.Type){
             case 1:
@@ -169,7 +169,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box3.y -= 20;
                     this.box3.x -= 20;
                     
-                    this.orientation = 1;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 1;
+                    }
+                    else{
+                        this.box0.y -= 20;
+                        this.box0.x += 20;
+
+                        this.box2.y += 40;
+
+                        this.box3.y += 20;
+                        this.box3.x += 20;
+                    }
                 }
                 else if(this.orientation == 1){
                     this.box0.y -= 20;
@@ -180,7 +192,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box3.y -= 20;
                     this.box3.x += 20;
                     
-                    this.orientation = 2;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 2;
+                    }
+                    else{
+                        this.box0.y += 20;
+                        this.box0.x += 20;
+
+                        this.box2.x -= 40;
+
+                        this.box3.y += 20;
+                        this.box3.x -= 20;
+                    }
                 }
                 else if(this.orientation == 2){
                     this.box0.y -= 20;
@@ -191,7 +215,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box3.y += 20;
                     this.box3.x += 20;
                     
-                    this.orientation = 3;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 3;
+                    }
+                    else{
+                        this.box0.y += 20;
+                        this.box0.x -= 20;
+
+                        this.box2.y -= 40;
+
+                        this.box3.y -= 20;
+                        this.box3.x -= 20;
+                    }
                 }
                 else if(this.orientation == 3){
                     this.box0.y += 20;
@@ -202,7 +238,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box3.y += 20;
                     this.box3.x -= 20;
                     
-                    this.orientation = 0;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 0;
+                    }
+                    else{
+                        this.box0.y -= 20;
+                        this.box0.x -= 20;
+
+                        this.box2.x += 40;
+
+                        this.box3.y -= 20;
+                        this.box3.x += 20;
+                    }
                 }
                 break;
                 
@@ -218,7 +266,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box2.y -= 20;
                     this.box2.x -= 20;
                     
-                    this.orientation = 1;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 1;
+                    }
+                    else{
+                        this.box1.y += 20;
+                        this.box1.x -= 20;
+
+                        this.box3.x += 40;
+
+                        this.box2.y += 20;
+                        this.box2.x += 20;
+                    }
                 }
                 else if(this.orientation == 1){
                     this.box1.y += 20;
@@ -229,7 +289,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box2.y -= 20;
                     this.box2.x += 20;
                     
-                    this.orientation = 2;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 2;
+                    }
+                    else{
+                        this.box1.y -= 20;
+                        this.box1.x -= 20;
+
+                        this.box3.y += 40;
+
+                        this.box2.y += 20;
+                        this.box2.x -= 20;
+                    }
                 }
                 else if(this.orientation == 2){
                     this.box1.y += 20;
@@ -240,7 +312,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box2.y += 20;
                     this.box2.x += 20;
                     
-                    this.orientation = 3;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 3;
+                    }
+                    else{
+                        this.box1.y -= 20;
+                        this.box1.x += 20;
+
+                        this.box3.x -= 40;
+
+                        this.box2.y -= 20;
+                        this.box2.x -= 20;
+                    }
                 }
                 else if(this.orientation == 3){
                     this.box1.y -= 20;
@@ -251,7 +335,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box2.y += 20;
                     this.box2.x -= 20;
                     
-                    this.orientation = 0;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 0;
+                    }
+                    else{
+                        this.box1.y += 20;
+                        this.box1.x += 20;
+
+                        this.box3.y -= 40;
+
+                        this.box2.y -= 20;
+                        this.box2.x += 20;
+                    }
                 }
                 
                 break;
@@ -268,7 +364,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box0.y -= 20;
                     this.box0.x += 20;
                     
-                    this.orientation = 1;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 1;
+                    }
+                    else{
+                        this.box3.y -= 20;
+                        this.box3.x += 20;
+
+                        this.box2.y += 40;
+
+                        this.box0.y += 20;
+                        this.box0.x -= 20;
+                    }
                 }
                 else if(this.orientation == 1){
                     this.box3.y -= 20;
@@ -279,7 +387,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box0.y += 20;
                     this.box0.x += 20;
                     
-                    this.orientation = 2;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 2;
+                    }
+                    else{
+                        this.box3.y += 20;
+                        this.box3.x += 20;
+
+                        this.box2.x -= 40;
+
+                        this.box0.y -= 20;
+                        this.box0.x -= 20;
+                    }
                 }
                 else if(this.orientation == 2){
                     this.box3.y -= 20;
@@ -290,7 +410,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box0.y += 20;
                     this.box0.x -= 20;
                     
-                    this.orientation = 3;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 3;
+                    }
+                    else{
+                        this.box3.y += 20;
+                        this.box3.x -= 20;
+
+                        this.box2.y -= 40;
+
+                        this.box0.y -= 20;
+                        this.box0.x += 20;
+                    }
                 }
                 else if(this.orientation == 3){
                     this.box3.y += 20;
@@ -301,7 +433,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box0.y -= 20;
                     this.box0.x -= 20;
                     
-                    this.orientation = 0;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 0;
+                    }
+                    else{
+                        this.box3.y -= 20;
+                        this.box3.x -= 20;
+
+                        this.box2.x += 40;
+
+                        this.box0.y += 20;
+                        this.box0.x += 20;
+                    }
                 }
                 
                 break;
@@ -318,7 +462,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box3.y -= 20;
                     this.box3.x += 20;
                     
-                    this.orientation = 1;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 1;
+                    }
+                    else{
+                        this.box1.y -= 20;
+                        this.box1.x += 20;
+
+                        this.box2.x += 40;
+
+                        this.box3.y += 20;
+                        this.box3.x -= 20;
+                    }
                 }
                 else if(this.orientation == 1){
                     this.box1.y -= 20;
@@ -329,7 +485,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box3.y += 20;
                     this.box3.x += 20;
                     
-                    this.orientation = 2;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 2;
+                    }
+                    else{
+                        this.box1.y += 20;
+                        this.box1.x += 20;
+
+                        this.box2.y += 40;
+
+                        this.box3.y -= 20;
+                        this.box3.x -= 20;
+                    }
                 }
                 else if(this.orientation == 2){
                     this.box1.y -= 20;
@@ -340,7 +508,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box3.y += 20;
                     this.box3.x -= 20;
                     
-                    this.orientation = 3;
+                    //check if there is collision 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 3;
+                    }
+                    else{
+                        this.box1.y += 20;
+                        this.box1.x -= 20;
+
+                        this.box2.x -= 40;
+
+                        this.box3.y -= 20;
+                        this.box3.x += 20;
+                    }
                 }
                 else if(this.orientation == 3){
                     this.box1.y += 20;
@@ -351,7 +531,19 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box3.y -= 20;
                     this.box3.x -= 20;
                     
-                    this.orientation = 0;
+                    //check if there is any interference 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 0;
+                    }
+                    else{
+                        this.box1.y -= 20;
+                        this.box1.x -= 20;
+
+                        this.box2.y -= 40;
+
+                        this.box3.y += 20;
+                        this.box3.x += 20;
+                    }
                 }
                 
                 break;
@@ -371,8 +563,24 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     
                     this.box3.y -= 40;
                     this.box3.x -= 20;
-                    
-                    this.orientation = 1;
+                                      
+                    //check for collision
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 1;
+                    }
+                    else{
+                        this.box0.y -= 20;
+                        this.box0.x -= 40;
+
+                        this.box1.y -= 0;
+                        this.box1.x -= 20;
+
+                        this.box2.x += 0;
+                        this.box2.y += 20;
+
+                        this.box3.y += 40;
+                        this.box3.x += 20;
+                    }
                 }
                 else if(this.orientation == 1){
                     
@@ -388,8 +596,24 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box3.y += 40;
                     this.box3.x += 20;
                     
-                    this.orientation = 2;
-                }
+                    //check for interference
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 2;
+                    }
+                    else{
+                        this.box0.y += 20;
+                        this.box0.x += 40;
+
+                        this.box1.y -= 0;
+                        this.box1.x += 20;
+
+                        this.box2.x += 0;
+                        this.box2.y -= 20;
+
+                        this.box3.y -= 40;
+                        this.box3.x -= 20;
+                    }
+                }   
                 else if(this.orientation == 2){
                     this.box0.y += 20;
                     this.box0.x += 40;
@@ -403,7 +627,23 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     this.box3.y -= 40;
                     this.box3.x -= 20;
                     
-                    this.orientation = 3;
+                    //check for collision
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 3;
+                    }
+                    else{
+                        this.box0.y -= 20;
+                        this.box0.x -= 40;
+
+                        this.box1.y -= 0;
+                        this.box1.x -= 20;
+
+                        this.box2.x += 0;
+                        this.box2.y += 20;
+
+                        this.box3.y += 40;
+                        this.box3.x += 20;
+                    }
                 }
                 else if(this.orientation == 3){
                     this.box0.y -= 20;
@@ -417,11 +657,26 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
                     
                     this.box3.y += 40;
                     this.box3.x += 20;
-                    
-                    this.orientation = 0;
+
+                    //check if there is any interference 
+                    if((this.CollCheckBottom(stackOBJ) == false) && (this.CollCheckLeft(stackOBJ) == false) && (this.CollCheckRight(stackOBJ) == false)){
+                        this.orientation = 0;
+                    }
+                    else{
+                        this.box0.y += 20;
+                        this.box0.x += 40;
+
+                        this.box1.y -= 0;
+                        this.box1.x += 20;
+
+                        this.box2.x += 0;
+                        this.box2.y -= 20;
+
+                        this.box3.y -= 40;
+                        this.box3.x -= 20;
+                    }
                 }
-                
-                
+                            
                 break;
         }
     };
@@ -597,7 +852,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
     
     shapeOBJ.prototype.move = function(stackOBJ){
         
-        this.count++;
+        this.count+=3;
         
         //controlling for directional inputs 
         if(keyArray[RIGHT] === 1 && keyArray[LEFT] !== 1){
@@ -622,7 +877,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         }
         
         if(keyArray[UP] === 1 && this.UCount >= 5){
-            this.rotate(); 
+            this.rotate(stackOBJ); 
             this.UCount = 0;
         }
         else if(keyArray[UP] === 0){
@@ -630,7 +885,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         }
         
         if(keyArray[DOWN] === 1){
-            this.count+=2;
+            this.count+=6;
         }
         
         if(keyArray[LEFT] === 0 && keyArray[RIGHT] === 0){
@@ -693,6 +948,11 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         
         rect(325, 10, 250, 250);
         
+        textSize(30);
+        fill(0,0,0);
+        text("Next Shape", 370, 80);
+        noFill();
+        
         switch(Type){
             case 1:
                 this.box0.reset(280+this.Hshift,0+this.Vshift,1);
@@ -744,7 +1004,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
     } 
     
     //main shape that falls
-    var shape1 = new shapeOBJ(6);
+    var shape1 = new shapeOBJ(2);
 
     //the stack that is at the bottom
     var pile = new stack();
