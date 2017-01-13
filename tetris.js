@@ -954,7 +954,7 @@ var sketchProc = function (processingInstance) { with (processingInstance) {
         noFill();
         
         switch(Type){
-            case 1:
+            case 0:
                 this.box0.reset(280+this.Hshift,0+this.Vshift,1);
                 this.box1.reset(300+this.Hshift,0+this.Vshift,1);
                 this.box2.reset(280+this.Hshift,20+this.Vshift,1);
